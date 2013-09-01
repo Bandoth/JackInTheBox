@@ -8,45 +8,66 @@ byte servoState = 0;
 
 void ServoHandler()
 {
+    JackServo myServo;
   servoState++;
   
   switch (servoState)
   {
     case 1:
-    #ifdef LIDTEST
-      LidServo1.write(SERVO_1_OPEN);
-      LidServo2.write(SERVO_2_OPEN);
-    #else
-      LidServo1.write(65);
-      LidServo2.write(65);
-    #endif
-      TestServo1.write(65);
-      TestServo2.write(65);
-      TestServo3.write(65);
+        myServo = _LidServo1;
+        WriteServo(myServo, SERVO_1_OPEN);
+    
+        myServo = _LidServo2;
+        WriteServo(myServo, SERVO_2_OPEN);
+    
+        myServo = _NeckServo;
+        WriteServo(myServo, 65);
+    
+        myServo = _TorsoServo;
+        WriteServo(myServo, 65);
+    
+        myServo = _StabServo;
+        WriteServo(myServo, 65);
+    
+        myServo = _WaveServo;
+        WriteServo(myServo, 65);
+    
+        myServo = _TalkServo;
+        WriteServo(myServo, 65);
 
-      Serial.println("Open");
-      break;
+        Serial.println("Open");
+        break;
     
     case 2:
-    #ifdef LIDTEST
-      LidServo1.write(SERVO_1_CLOSE);
-      LidServo2.write(SERVO_2_CLOSE);
-    #else
-      LidServo1.write(135);
-      LidServo2.write(135);
-    #endif
-      TestServo1.write(135);
-      TestServo2.write(135);
-      TestServo3.write(135);
+        myServo = _LidServo1;
+        WriteServo(myServo, SERVO_1_OPEN);
+    
+        myServo = _LidServo2;
+        WriteServo(myServo, SERVO_2_OPEN);
+    
+        myServo = _NeckServo;
+        WriteServo(myServo, 135);
+    
+        myServo = _TorsoServo;
+        WriteServo(myServo, 135);
+    
+        myServo = _StabServo;
+        WriteServo(myServo, 135);
+    
+        myServo = _WaveServo;
+        WriteServo(myServo, 135);
+    
+        myServo = _TalkServo;
+        WriteServo(myServo, 135);
 
-      Serial.println("Close");
-      break;
+        Serial.println("Close");
+        break;
 
     default:
-      servoState = 0;
-      Serial.println("Reset");
-      delay(2000);
-      break;
+        servoState = 0;
+        Serial.println("Reset");
+        delay(2000);
+        break;
   }
   
   /*
@@ -76,25 +97,25 @@ void WriteServo(JackServo myServo, UINT_8 setDegrees)
     switch (myServo)
     {
         case _LidServo1:
-            // OCRnx = servoWriteValue;
+            OCR3A = servoWriteValue;
             break;
         case _LidServo2:
-            // OCRnx = servoWriteValue;
+            OCR4A = servoWriteValue;
             break;
         case _NeckServo:
-            // OCRnx = servoWriteValue;
+            OCR4B = servoWriteValue;
             break;
         case _TorsoServo:
-            // OCRnx = servoWriteValue;
+            OCR5C = servoWriteValue;
             break;
         case _StabServo:
-            // OCRnx = servoWriteValue;
+            OCR5B = servoWriteValue;
             break;
         case _WaveServo:
-            // OCRnx = servoWriteValue;
+            OCR5A = servoWriteValue;
             break;
         case _TalkServo:
-            // OCRnx = servoWriteValue;
+            OCR4C = servoWriteValue;
             break;
         default:
             break;

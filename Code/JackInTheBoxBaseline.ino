@@ -1,6 +1,5 @@
 #include <avr/eeprom.h>
 #include <EEPROM.h>
-#include <Servo.h>
 #include "WaveUtil.h"
 #include "WaveHC.h"
 #include "Typedefs.h"
@@ -17,8 +16,13 @@
  *    SCK = 24
  *    SDI = 26
  * Servos:
- *    Test Servo = 8
- *    Test Servo2 = 11
+ *    LidServo1    = pin 5
+ *    LidServo2    = pin 6
+ *    NeckServo    = pin 7
+ *    TorsoServo   = pin 44
+ *    StabServo    = pin 45
+ *    WaveServo    = pin 46
+ *    TalkServo    = pin 8
  */
  
 #define SERVO_1_OPEN  20
@@ -27,21 +31,6 @@
 #define SERVO_2_CLOSE  20
 
 const int LEDPin = 31;
- 
-const int LidPin1 = 8;      // Digital pin for Lid PWM
-const int LidPin2 = 11;      // Digital pin for Lid PWM
-const int ServoPin3 = 7;
-const int ServoPin4 = 6;
-const int ServoPin5 = 5;
-
-const int ServoMin = 900;    // Corresponds to minimum pulse width in usecs for 0 degrees
-const int ServoMax = 2100;   // Corresponds to maximum pulse width in usecs for 180 degrees
-
-Servo LidServo1;
-Servo LidServo2;
-Servo TestServo1;
-Servo TestServo2;
-Servo TestServo3;
 
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
@@ -60,70 +49,78 @@ dir_t dirBuf;     // buffer for directory reads
 // Function definitions (we define them here, but the code is below)
 void play(FatReader &dir);
 
-//#define LIDTEST 1
-
 /* Setup routine automatically run first */
 void setup()
 {
-  pinMode(LEDPin, OUTPUT);
+    JackServo myServo;
+    
+    pinMode(LEDPin, OUTPUT);
+    PWMSetup();
   
-  LidServo1.attach(LidPin1);
-  LidServo2.attach(LidPin2);
-  TestServo1.attach(ServoPin3);
-  TestServo2.attach(ServoPin4);
-  TestServo3.attach(ServoPin5);
-  
-#ifdef LIDTEST
-  LidServo1.write(SERVO_1_OPEN);
-  LidServo2.write(SERVO_2_OPEN);
-#else
-  LidServo1.write(90);
-  LidServo2.write(90);
-#endif
-  TestServo1.write(90);
-  TestServo2.write(90);
-  TestServo3.write(90);
+    myServo = _LidServo1;
+    WriteServo(myServo, SERVO_1_OPEN);
+    
+    myServo = _LidServo2;
+    WriteServo(myServo, SERVO_2_OPEN);
+    
+    myServo = _NeckServo;
+    WriteServo(myServo, 90);
+    
+    myServo = _TorsoServo;
+    WriteServo(myServo, 90);
+    
+    myServo = _StabServo;
+    WriteServo(myServo, 90);
+    
+    myServo = _WaveServo;
+    WriteServo(myServo, 90);
+    
+    myServo = _TalkServo;
+    WriteServo(myServo, 90);
+    
+    Serial.begin(9600);  
+    putstring_nl("\nWave test!");  // say we woke up!
+    
+    putstring("Free RAM: ");       // This can help with debugging, running out of RAM is bad
+    Serial.println(FreeRam());
 
-  Serial.begin(9600);  
-  putstring_nl("\nWave test!");  // say we woke up!
+//    if (!card.init(true)) { //play with 4 MHz spi if 8MHz isn't working for you
+    if (!card.init()) 
+    {         //play with 8 MHz spi (default faster!)  
+        error("Card init. failed!");  // Something went wrong, lets print out why
+    }
   
-  putstring("Free RAM: ");       // This can help with debugging, running out of RAM is bad
-  Serial.println(FreeRam());
+    // enable optimize read - some cards may timeout. Disable if you're having problems
+    card.partialBlockRead(true);
+    
+    // Now we will look for a FAT partition!
+    uint8_t part;
+    for (part = 0; part < 5; part++) {   // we have up to 5 slots to look in
+        if (vol.init(card, part)) 
+          break;                           // we found one, lets bail
+    }
+    if (part == 5) 
+    {                     // if we ended up not finding one  :(
+        error("No valid FAT partition!");  // Something went wrong, lets print out why
+    }
+    
+    // Lets tell the user about what we found
+    putstring("Using partition ");
+    Serial.print(part, DEC);
+    putstring(", type is FAT");
+    Serial.println(vol.fatType(), DEC);     // FAT16 or FAT32?
+    
+    // Try to open the root directory
+    if (!root.openRoot(vol)) 
+    {
+        error("Can't open root dir!");      // Something went wrong,
+    }
+  
+    // Whew! We got past the tough parts.
+    putstring_nl("Files found (* = fragmented):");
 
-//  if (!card.init(true)) { //play with 4 MHz spi if 8MHz isn't working for you
-  if (!card.init()) {         //play with 8 MHz spi (default faster!)  
-    error("Card init. failed!");  // Something went wrong, lets print out why
-  }
-  
-  // enable optimize read - some cards may timeout. Disable if you're having problems
-  card.partialBlockRead(true);
-  
-  // Now we will look for a FAT partition!
-  uint8_t part;
-  for (part = 0; part < 5; part++) {   // we have up to 5 slots to look in
-    if (vol.init(card, part)) 
-      break;                           // we found one, lets bail
-  }
-  if (part == 5) {                     // if we ended up not finding one  :(
-    error("No valid FAT partition!");  // Something went wrong, lets print out why
-  }
-  
-  // Lets tell the user about what we found
-  putstring("Using partition ");
-  Serial.print(part, DEC);
-  putstring(", type is FAT");
-  Serial.println(vol.fatType(), DEC);     // FAT16 or FAT32?
-  
-  // Try to open the root directory
-  if (!root.openRoot(vol)) {
-    error("Can't open root dir!");      // Something went wrong,
-  }
-  
-  // Whew! We got past the tough parts.
-  putstring_nl("Files found (* = fragmented):");
-
-  // Print out all of the files in all the directories.
-  root.ls(LS_R | LS_FLAG_FRAGMENTED);
+    // Print out all of the files in all the directories.
+    root.ls(LS_R | LS_FLAG_FRAGMENTED);
 }
 
 /* Loop routine runs continuously forever */
