@@ -3,6 +3,7 @@
 #include <Servo.h>
 #include "WaveUtil.h"
 #include "WaveHC.h"
+#include "Typedefs.h"
 
 /*
  * This example plays every .WAV file it finds on the SD card in a loop while playing with a servo
@@ -73,8 +74,8 @@ void setup()
   TestServo3.attach(ServoPin5);
   
 #ifdef LIDTEST
-  LidServo1.write(SERVO_1_OPEN);  // Set to 0 degree position
-  LidServo2.write(SERVO_2_OPEN);  // Set to 0 degree position
+  LidServo1.write(SERVO_1_OPEN);
+  LidServo2.write(SERVO_2_OPEN);
 #else
   LidServo1.write(90);
   LidServo2.write(90);
