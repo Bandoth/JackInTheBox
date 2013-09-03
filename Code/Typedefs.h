@@ -45,5 +45,13 @@ typedef enum
     _AudioRoutine5
 } SelectedAudio;
 
+typedef enum
+{
+    _ButtonWaiting,
+    _ButtonTimeout,
+    _ButtonPressesDetected,
+    _ButtonPopThreshReached
+} ButtonStates;
+
 #endif
 
