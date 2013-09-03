@@ -37,9 +37,14 @@ FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
 FatReader file;   // This object represent the WAV file for a pi digit or period
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
+UINT_8 AudioRateSelect = 4;
+UINT_32 BaseAudioRate;
 
 uint8_t dirLevel; // indent level for file/dir names    (for prettyprinting)
 dir_t dirBuf;     // buffer for directory reads
+
+BoxState JackBoxState = _Waiting;
+JackRoutine SelectedRoutine = _Routine1;
 
 /*
  * Define macro to put error messages in flash memory
@@ -128,59 +133,13 @@ void setup()
 /* Loop routine runs continuously forever */
 void loop()
 {
+    JackBoxState = _Playing;
     // Do looping stuff, no need for while statement.
     while(!OCF0A);
     TIFR0 |= 0b00000010;    // Clear flag
-//    DoStuff();
-    if (!wave.isplaying)
-    {
-        sdErrorCheck();    // everything OK?
-        MusicStateMachine();
-    }
+
+    MusicStateMachine();
     ServoStateMachine();
     LEDStateMachine();
 }
-
-void DoStuff()
-{
-    char name[13];
-
-    // copy flash string for 'period' to filename
-    strcpy_P(name, PSTR("TEST.WAV"));
-
-    if (wave.isplaying) // already playing something, so stop it!
-    {
-        wave.stop(); // stop it
-    }
-    if (!file.open(root, name)) 
-    {
-        PgmPrint("Couldn't open file ");
-        Serial.print(name);
-        while(1); 
-    }
-    if (!wave.create(file)) 
-    {
-        PgmPrintln("Not a valid WAV");
-        while(1);
-    }
-
-    wave.volume = 0;  // Volume Control 5 = Very Soft, 0 = LOUD
-
-    // ok time to play!
-    wave.play();
-
-    while (wave.isplaying) 
-    {
-        //Add code for what to do while playing music
-        ServoHandler();
-
-        digitalWrite(LEDPin, LOW);
-        delay(1000);
-        digitalWrite(LEDPin, HIGH);
-        delay(1000);
-    }
-    sdErrorCheck();                    // everything OK?
-}
-
-
 

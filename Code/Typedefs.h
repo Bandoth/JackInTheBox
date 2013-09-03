@@ -18,5 +18,32 @@ typedef enum
     _TalkServo 
 } JackServo;
 
+typedef enum
+{
+    _Waiting,
+    _Playing,
+    _Popped
+} BoxState;
+
+typedef enum
+{
+    _Routine1 = 1,
+    _Routine2,
+    _Routine3,
+    _Routine4,
+    _Routine5
+} JackRoutine;
+
+typedef enum
+{
+    _AudioNone,
+    _AudioPop,
+    _AudioRoutine1,
+    _AudioRoutine2,
+    _AudioRoutine3,
+    _AudioRoutine4,
+    _AudioRoutine5
+} SelectedAudio;
+
 #endif
 

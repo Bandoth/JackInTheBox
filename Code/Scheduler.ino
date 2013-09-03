@@ -20,3 +20,37 @@ void ScheduleTimerSetup()
     TCNT0 = 0;
     TIFR0 |= 0b00000010;    // Clear flag
 }
+
+const UINT_8 RoutineChooser[30] =
+{
+    5,
+    1,
+    3,
+    4,
+    2,
+    3,
+    1,
+    5,
+    2,
+    4,
+    5,
+    3,
+    4,
+    2,
+    1,
+    4,
+    1,
+    2,
+    5,
+    3,
+    5,
+    1,
+    4,
+    2,
+    3,
+    4,
+    5,
+    1,
+    3,
+    2
+};

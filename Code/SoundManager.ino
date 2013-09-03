@@ -1,9 +1,97 @@
+SelectedAudio CurrentAudio = _AudioNone;
+
 void MusicStateMachine(void)
+{
+    switch (JackBoxState)
+    {
+    case _Waiting:
+        CurrentAudio = _AudioNone;
+        if (wave.isplaying)
+        {
+            wave.stop();
+        }
+        sdErrorCheck();    // everything OK?
+        break;
+    case _Playing:
+        if ((CurrentAudio == _AudioNone) || (CurrentAudio != _AudioPop))
+        {
+            PlayPopGoesTheWeasel();
+        }
+        AudioSpeedandTimeout();
+        break;
+    case _Popped:
+        if ((CurrentAudio == _AudioNone) || (CurrentAudio == _AudioPop))
+        {
+            PlayRoutine(SelectedRoutine);
+        }
+        break;
+    default:
+        break;
+    }
+//    PlayPopGoesTheWeasel();
+}
+
+void PlayPopGoesTheWeasel(void)
 {
     char name[13];
 
     // copy flash string for 'period' to filename
-    strcpy_P(name, PSTR("TEST.WAV"));
+    strcpy_P(name, PSTR("WEASEL.WAV"));
+    CurrentAudio = _AudioPop;
+    
+    if (wave.isplaying) // already playing something, so stop it!
+    {
+        wave.stop(); // stop it
+    }
+    if (!file.open(root, name)) 
+    {
+        PgmPrint("Couldn't open file ");
+        Serial.print(name);
+        while(1); 
+    }
+    if (!wave.create(file)) 
+    {
+        PgmPrintln("Not a valid WAV");
+        while(1);
+    }
+
+    wave.volume = 0;  // Volume Control 5 = Very Soft, 0 = LOUD
+
+    // ok time to play!
+    wave.play();
+}
+
+void PlayRoutine(JackRoutine CurrentRoutine)
+{
+    char name[13];
+
+    switch (CurrentRoutine)
+    {
+    case _Routine1:
+        strcpy_P(name, PSTR("R1.WAV"));
+        CurrentAudio = _AudioRoutine1;
+        break;
+    case _Routine2:
+        strcpy_P(name, PSTR("R2.WAV"));
+        CurrentAudio = _AudioRoutine2;
+        break;
+    case _Routine3:
+        strcpy_P(name, PSTR("R3.WAV"));
+        CurrentAudio = _AudioRoutine3;
+        break;
+    case _Routine4:
+        strcpy_P(name, PSTR("R4.WAV"));
+        CurrentAudio = _AudioRoutine4;
+        break;
+    case _Routine5:
+        strcpy_P(name, PSTR("R5.WAV"));
+        CurrentAudio = _AudioRoutine5;
+        break;
+    default:
+        strcpy_P(name, PSTR("R1.WAV"));
+        CurrentAudio = _AudioRoutine1;
+        break;
+    }
 
     if (wave.isplaying) // already playing something, so stop it!
     {
@@ -25,6 +113,11 @@ void MusicStateMachine(void)
 
     // ok time to play!
     wave.play();
+}
+
+void AudioSpeedandTimeout(void)
+{
+    
 }
 
 /////////////////////////////////// HELPERS
@@ -116,25 +209,41 @@ void play(FatReader &dir)
 /*
  *EXAMPLE OF PLAYBACK SPEED CONTROL
  */
-int16_t lastpotval = 0;
-#define HYSTERESIS 3
+UINT_32 AudioRate;
+UINT_8 AudioRateSet = 0;
 
-void SpeedControlExample(char *name) {
-  int16_t potval;
-  uint32_t newsamplerate;
+void SpeedControlExample(char *name) 
+{
+    if (!AudioRateSet)
+    {
+        BaseAudioRate = wave.dwSamplesPerSec;
+        AudioRateSet = 1;
+    }
+//    counter++;
+    AudioRate = BaseAudioRate;
+//    AudioRate = AudioRate * 50;  
+//    AudioRate = AudioRate * 78;
+//    AudioRate = AudioRate >> 6;
+//    wave.setSampleRate(AudioRate);
 
-//  playfile(name);
-  while (wave.isplaying) {
-     potval = analogRead(0);
-     if ( ((potval - lastpotval) > HYSTERESIS) || ((lastpotval - potval) > HYSTERESIS)) {
-        newsamplerate = wave.dwSamplesPerSec;  // get the original sample rate
-        newsamplerate *= potval;                       // scale it by the analog value
-        newsamplerate /= 512;   // we want to 'split' between 2x sped up and slowed down.
-        wave.setSampleRate(newsamplerate);  // set it immediately!
-        Serial.println(newsamplerate, DEC);  // for debugging
-        lastpotval = potval;
-     }
-     delay(100);
-   }
-//  card.close_file(f);
+    if (AudioRateSelect == 0)
+    {
+        wave.setSampleRate(AudioRate);
+    }
+    else if (AudioRateSelect == 1)
+    {
+        AudioRate = AudioRate * 78;
+        AudioRate = AudioRate >> 6;
+        wave.setSampleRate(AudioRate);
+    }
+    else if (AudioRateSelect == 2)
+    {
+        AudioRate = AudioRate * 50;
+        AudioRate = AudioRate >> 6;
+        wave.setSampleRate(AudioRate);
+    }
+
+//    if (counter >= 3000)
+//        counter = 0;
 }
+
