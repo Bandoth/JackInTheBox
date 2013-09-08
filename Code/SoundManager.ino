@@ -1,7 +1,14 @@
 SelectedAudio CurrentAudio = _AudioNone;
+UINT_8 AudioRateDelay = 0;
 
 void MusicStateMachine(void)
 {
+    if (!AudioRateSet)
+    {
+        BaseAudioRate = wave.dwSamplesPerSec;
+        AudioRateSet = 1;
+    }
+
     switch (JackBoxState)
     {
     case _Waiting:
@@ -17,18 +24,20 @@ void MusicStateMachine(void)
         {
             PlayPopGoesTheWeasel();
         }
+
         AudioSpeedandTimeout();
         break;
     case _Popped:
         if ((CurrentAudio == _AudioNone) || (CurrentAudio == _AudioPop))
         {
-            PlayRoutine(SelectedRoutine);
+            PlayPopGoesTheWeasel();
+//            PlayRoutine(SelectedRoutine);
         }
         break;
     default:
         break;
     }
-//    PlayPopGoesTheWeasel();
+    //    PlayPopGoesTheWeasel();
 }
 
 void PlayPopGoesTheWeasel(void)
@@ -38,7 +47,7 @@ void PlayPopGoesTheWeasel(void)
     // copy flash string for 'period' to filename
     strcpy_P(name, PSTR("WEASEL.WAV"));
     CurrentAudio = _AudioPop;
-    
+
     if (wave.isplaying) // already playing something, so stop it!
     {
         wave.stop(); // stop it
@@ -117,7 +126,24 @@ void PlayRoutine(JackRoutine CurrentRoutine)
 
 void AudioSpeedandTimeout(void)
 {
-    
+    UINT_32 AudioRate = BaseAudioRate;
+    AudioRateDelay++;
+/*
+    if (AudioRateDelay >= 10)
+    {
+        AudioRateDelay = 0;
+        if ((JackBoxState == _Playing) && (wave.isplaying))
+        {
+            AudioRate = AudioRate * AudioPlaybackMultiplier;
+            AudioRate = AudioRate >> 6;
+
+            wave.setSampleRate(AudioRate);
+        }
+        else if (wave.isplaying)
+        {
+            wave.setSampleRate(AudioRate);
+        }
+    }*/
 }
 
 void SDCardInit(void)
@@ -258,41 +284,42 @@ void play(FatReader &dir)
  */
 /*
 UINT_32 AudioRate;
-UINT_8 AudioRateSet = 0;
+ UINT_8 AudioRateSet = 0;
+ 
+ void SpeedControlExample(char *name) 
+ {
+ if (!AudioRateSet)
+ {
+ BaseAudioRate = wave.dwSamplesPerSec;
+ AudioRateSet = 1;
+ }
+ //    counter++;
+ AudioRate = BaseAudioRate;
+ //    AudioRate = AudioRate * 50;  
+ //    AudioRate = AudioRate * 78;
+ //    AudioRate = AudioRate >> 6;
+ //    wave.setSampleRate(AudioRate);
+ 
+ if (AudioRateSelect == 0)
+ {
+ wave.setSampleRate(AudioRate);
+ }
+ else if (AudioRateSelect == 1)
+ {
+ AudioRate = AudioRate * 78;
+ AudioRate = AudioRate >> 6;
+ wave.setSampleRate(AudioRate);
+ }
+ else if (AudioRateSelect == 2)
+ {
+ AudioRate = AudioRate * 50;
+ AudioRate = AudioRate >> 6;
+ wave.setSampleRate(AudioRate);
+ }
+ 
+ //    if (counter >= 3000)
+ //        counter = 0;
+ }
+ */
 
-void SpeedControlExample(char *name) 
-{
-    if (!AudioRateSet)
-    {
-        BaseAudioRate = wave.dwSamplesPerSec;
-        AudioRateSet = 1;
-    }
-//    counter++;
-    AudioRate = BaseAudioRate;
-//    AudioRate = AudioRate * 50;  
-//    AudioRate = AudioRate * 78;
-//    AudioRate = AudioRate >> 6;
-//    wave.setSampleRate(AudioRate);
-
-    if (AudioRateSelect == 0)
-    {
-        wave.setSampleRate(AudioRate);
-    }
-    else if (AudioRateSelect == 1)
-    {
-        AudioRate = AudioRate * 78;
-        AudioRate = AudioRate >> 6;
-        wave.setSampleRate(AudioRate);
-    }
-    else if (AudioRateSelect == 2)
-    {
-        AudioRate = AudioRate * 50;
-        AudioRate = AudioRate >> 6;
-        wave.setSampleRate(AudioRate);
-    }
-
-//    if (counter >= 3000)
-//        counter = 0;
-}
-*/
 

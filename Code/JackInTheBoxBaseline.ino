@@ -12,12 +12,16 @@ FatReader file;   // This object represent the WAV file for a pi digit or period
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
 UINT_8 AudioPlaybackMultiplier = 64;
 UINT_32 BaseAudioRate;
+UINT_8 AudioRateSet = 0;
 
 uint8_t dirLevel; // indent level for file/dir names    (for prettyprinting)
 dir_t dirBuf;     // buffer for directory reads
 
 BoxState JackBoxState = _Waiting;
 JackRoutine SelectedRoutine = _Routine1;
+
+UINT_32 ScheduleTimer = 0;
+UINT_16 DelCounter = 0;
 
 /*
  * Define macro to put error messages in flash memory
@@ -30,49 +34,41 @@ void play(FatReader &dir);
 /* Setup routine automatically run first */
 void setup()
 {
-    JackServo myServo;
-
     DigitalPinsInit();
     
     PWMSetup();
 
-    myServo = _LidServo1;
-    WriteServo(myServo, SERVO_1_OPEN);
-
-    myServo = _LidServo2;
-    WriteServo(myServo, SERVO_2_OPEN);
-
-    myServo = _NeckServo;
-    WriteServo(myServo, 90);
-
-    myServo = _TorsoServo;
-    WriteServo(myServo, 90);
-
-    myServo = _StabServo;
-    WriteServo(myServo, 90);
-
-    myServo = _WaveServo;
-    WriteServo(myServo, 90);
-
-    myServo = _TalkServo;
-    WriteServo(myServo, 90);
+    WriteServo(_LidServo1, SERVO_1_OPEN);
+    WriteServo(_LidServo2, SERVO_2_OPEN);
+    WriteServo(_NeckServo, 90);
+    WriteServo(_TorsoServo, 90);
+    WriteServo(_StabServo, 90);
+    WriteServo(_WaveServo, 90);
+    WriteServo(_TalkServo, 90);
     
     SDCardInit();
-    
-    ScheduleTimerSetup();
 }
 
 /* Loop routine runs continuously forever */
 void loop()
 {
-    JackBoxState = _Playing;
+//    JackBoxState = _Playing;
 
-    while(!OCF0A);
-    TIFR0 |= 0b00000010;    // Clear flag
-    
-    JackStateHandler();
-    MusicStateMachine();
-    ServoStateMachine();
-    LEDStateMachine();
+    if((millis() - ScheduleTimer) >= 10)
+    {
+        DelCounter++;
+        
+        if (DelCounter >= BASETASKTIME)
+        {
+            DelCounter = 0;
+            
+            JackStateHandler();
+            MusicStateMachine();
+            ServoStateMachine();
+            LEDStateMachine();
+        }
+        
+        ScheduleTimer = millis();
+    }
 }
 

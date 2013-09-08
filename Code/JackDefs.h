@@ -32,6 +32,21 @@
 #define SERVO_1_CLOSE  160
 #define SERVO_2_CLOSE  20
 
+#define THRESH_ButtonTimeout        60
+#define THRESH_ButtonPeriodSlowdown 8
+
+#define AUDIO_MULT_BASE   64
+#define AUDIO_MULT_MIN    50
+#define AUDIO_MULT_MAX    78
+
+#define PinLidServo1  5
+#define PinLidServo2  6
+#define PinNeckServo  7
+#define PinTorsoServo 44
+#define PinStabServo  45
+#define PinWaveServo  46
+#define PinTalkServo  8
+
 #define PinLEDOptics1 30
 #define PinLEDOptics2 31
 #define PinLEDBox1    32
@@ -45,5 +60,7 @@
 
 #define PinActuator   40
 #define PinButtonInp  41
+
+#define BASETASKTIME  10    // BASETASKTIME * 10ms = rate we run
  
  #endif

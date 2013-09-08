@@ -8,62 +8,35 @@ byte servoState = 0;
 
 void ServoStateMachine(void)
 {
-    
+    ServoHandler();
 }
 
 void ServoHandler(void)
 {
-    JackServo myServo;
     servoState++;
 
     switch (servoState)
     {
     case 1:
-        myServo = _LidServo1;
-        WriteServo(myServo, SERVO_1_OPEN);
+        WriteServo(_LidServo1, SERVO_1_OPEN);
+        WriteServo(_LidServo2, SERVO_2_OPEN);
+        WriteServo(_NeckServo, 65);
+        WriteServo(_TorsoServo, 65);
+        WriteServo(_StabServo, 65);
+        WriteServo(_WaveServo, 65);
+        WriteServo(_TalkServo, 65);
 
-        myServo = _LidServo2;
-        WriteServo(myServo, SERVO_2_OPEN);
-
-        myServo = _NeckServo;
-        WriteServo(myServo, 65);
-
-        myServo = _TorsoServo;
-        WriteServo(myServo, 65);
-
-        myServo = _StabServo;
-        WriteServo(myServo, 65);
-
-        myServo = _WaveServo;
-        WriteServo(myServo, 65);
-
-        myServo = _TalkServo;
-        WriteServo(myServo, 65);
-
-        Serial.println("Open");
+        Serial.println("Close");
         break;
 
     case 2:
-        myServo = _LidServo1;
-        WriteServo(myServo, SERVO_1_OPEN);
-
-        myServo = _LidServo2;
-        WriteServo(myServo, SERVO_2_OPEN);
-
-        myServo = _NeckServo;
-        WriteServo(myServo, 135);
-
-        myServo = _TorsoServo;
-        WriteServo(myServo, 135);
-
-        myServo = _StabServo;
-        WriteServo(myServo, 135);
-
-        myServo = _WaveServo;
-        WriteServo(myServo, 135);
-
-        myServo = _TalkServo;
-        WriteServo(myServo, 135);
+        WriteServo(_LidServo1, SERVO_1_OPEN);
+        WriteServo(_LidServo2, SERVO_2_OPEN);
+        WriteServo(_NeckServo, 135);
+        WriteServo(_TorsoServo, 135);
+        WriteServo(_StabServo, 135);
+        WriteServo(_WaveServo, 135);
+        WriteServo(_TalkServo, 135);
 
         Serial.println("Close");
         break;
@@ -71,7 +44,6 @@ void ServoHandler(void)
     default:
         servoState = 0;
         Serial.println("Reset");
-        delay(2000);
         break;
     }
 
@@ -92,13 +64,10 @@ void ServoHandler(void)
 
 void WriteServo(JackServo myServo, UINT_8 setDegrees)
 {
-    UINT_32 CalcVar;
-    UINT_16 servoWriteValue;
-
-    CalcVar = setDegrees * 1000;
-    CalcVar = CalcVar / 1000;
-    servoWriteValue = CalcVar + 1000;
-
+    UINT_16 servoWriteValue = 0;
+    
+    servoWriteValue = map(setDegrees, 0, 180, 1000, 10000);
+    
     switch (myServo)
     {
     case _LidServo1:
@@ -142,37 +111,39 @@ void WriteServo(JackServo myServo, UINT_8 setDegrees)
 void PWMSetup()
 {
     // Init ontime to closed box values
-    OCR3A = SERVODEGREES_0;   
-    OCR4A = SERVODEGREES_0;
-    OCR4B = SERVODEGREES_0;
-    OCR4C = SERVODEGREES_0;
-    OCR5A = SERVODEGREES_0;
-    OCR5B = SERVODEGREES_0;
-    OCR5C = SERVODEGREES_0;
-
+    WriteServo(_LidServo1, SERVO_1_CLOSE);
+    WriteServo(_LidServo2, SERVO_2_CLOSE);
+    WriteServo(_NeckServo, 90);
+    WriteServo(_TorsoServo, 90);
+    WriteServo(_StabServo, 90);
+    WriteServo(_WaveServo, 90);
+    WriteServo(_TalkServo, 90);
+    
+    
     // ICRn = 20000 (Freq of PWM = 50Hz)
-    ICR3 = 0x4E20;
-    ICR4 = 0x4E20;
-    ICR5 = 0x4E20;
+    ICR3 = 20000;
+    ICR4 = 20000;
+    ICR5 = 20000;
 
-    // Tmr3 output on OC3A, Toggle on match, Setup for Phase and Freq Correct mode
-    TCCR3A = 0b01000000;
-    // Turn off peripherals, Toggle on match, Prescaler N = 8
-    TCCR3B = 0b00010010;
+    TCCR3B = _BV(WGM33) | _BV(CS31); // phase and freq correct pwm mode, clk divider = 8
+    TCCR3A = 0;                      // Clear settings
+    TCCR3A |= _BV(COM3A1);           // Output on A only
+    
+    TCCR4B = _BV(WGM43) | _BV(CS41); // phase and freq correct pwm mode, clk divider = 8
+    TCCR4A = 0;                      // Clear settings
+    TCCR4A |= _BV(COM4A1) | _BV(COM4B1) | _BV(COM4C1); // Output on A B and C
 
-    // Tmr4 output on OC4A, OC4B, OC4C, Toggle on match, Setup for Phase and Freq Correct mode
-    TCCR4A = 0b01010100;
-    // Turn off peripherals, Toggle on match, Prescaler N = 8
-    TCCR4B = 0b00010010;
-
-    // Tmr5 output on OC5A, OC5B, OC5C, Toggle on match, Setup for Phase and Freq Correct mode
-    TCCR5A = 0b01010100;
-    // Turn off peripherals, Toggle on match, Prescaler N = 8
-    TCCR5B = 0b00010010;
+    TCCR5B = _BV(WGM53) | _BV(CS51); // phase and freq correct pwm mode, clk divider = 8
+    TCCR5A = 0;                      // Clear settings
+    TCCR5A |= _BV(COM5A1) | _BV(COM5B1) | _BV(COM5C1); // Output on A B and C
 
     // Disable Timer 3, 4, and 5 interrupts
     TIMSK3 = 0;
     TIMSK4 = 0;
     TIMSK5 = 0;
+
+    TCNT3 = 0; // Enable timers by clearing values
+    TCNT4 = 0; // Enable timers by clearing values
+    TCNT5 = 0; // Enable timers by clearing values
 }
 

@@ -7,6 +7,14 @@ void LEDStateMachine(void)
 
 void DigitalPinsInit(void)
 {
+    pinMode(PinLidServo1, OUTPUT);
+    pinMode(PinLidServo2, OUTPUT);
+    pinMode(PinNeckServo, OUTPUT);
+    pinMode(PinTorsoServo, OUTPUT);
+    pinMode(PinStabServo, OUTPUT);
+    pinMode(PinWaveServo, OUTPUT);
+    pinMode(PinTalkServo, OUTPUT);
+    
     pinMode(PinLEDOptics1, OUTPUT);
     pinMode(PinLEDOptics2, OUTPUT);
 

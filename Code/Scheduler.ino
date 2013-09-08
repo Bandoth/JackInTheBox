@@ -13,6 +13,8 @@ void JackStateHandler(void)
     switch (JackBoxState)
     {
     case _Waiting:
+        AudioPlaybackMultiplier = 64;
+        
         DelayCounter++;
         if (DelayCounter >= 5)
         {
@@ -34,7 +36,10 @@ void JackStateHandler(void)
             
             if (ButtonState == _ButtonTimeout)
             {
-                wave.stop();
+                if (wave.isplaying)
+                {
+                    wave.stop();
+                }
                 JackBoxState = _Waiting;
             }
             else if (ButtonState == _ButtonPopThreshReached)
@@ -89,18 +94,18 @@ ButtonStates ButtonHandler(void)
             // Holding button, count period, count to timeout
             ButtonPeriodCounter++;
             
-            if (ButtonPeriodCounter >= 8)
+            if (ButtonPeriodCounter >= THRESH_ButtonPeriodSlowdown)
             {
                 AudioPlaybackMultiplier--;
-                if (AudioPlaybackMultiplier <= 50)
+                if (AudioPlaybackMultiplier < AUDIO_MULT_MIN)
                 {
-                    AudioPlaybackMultiplier = 50;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MIN;
                 }
             }
             
             ButtonTimeoutCounter++;
             
-            if (ButtonTimeoutCounter >= 15)
+            if (ButtonTimeoutCounter >= THRESH_ButtonTimeout)
             {
                 ButtonTimeoutCounter = 0;
                 ButtonPeriodCounter = 0;
@@ -110,14 +115,15 @@ ButtonStates ButtonHandler(void)
         else if ((ButtonVal == 0) && (ButtonHoldDetector == 1))
         {
             // Button released, reset timeout, count period
+            ButtonHoldDetector = ButtonVal;
             ButtonPeriodCounter++;
             
-            if (ButtonPeriodCounter >= 8)
+            if (ButtonPeriodCounter >= THRESH_ButtonPeriodSlowdown)
             {
                 AudioPlaybackMultiplier--;
-                if (AudioPlaybackMultiplier <= 50)
+                if (AudioPlaybackMultiplier < AUDIO_MULT_MIN)
                 {
-                    AudioPlaybackMultiplier = 50;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MIN;
                 }
             }
             
@@ -128,30 +134,31 @@ ButtonStates ButtonHandler(void)
         else if (ButtonVal == 1)
         {
             // Button pressed, reset timeout, update global period
+            ButtonHoldDetector = ButtonVal;
             ButtonTimeoutCounter = 0;
             
             if (ButtonPeriodCounter <= 10)
             {
                 AudioPlaybackMultiplier += 3;
-                if (AudioPlaybackMultiplier >= 78)
+                if (AudioPlaybackMultiplier > AUDIO_MULT_MAX)
                 {
-                    AudioPlaybackMultiplier = 78;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MAX;
                 }
             }
             else if (ButtonPeriodCounter >= 11)
             {
                 AudioPlaybackMultiplier += 2;
-                if (AudioPlaybackMultiplier >= 78)
+                if (AudioPlaybackMultiplier > AUDIO_MULT_MAX)
                 {
-                    AudioPlaybackMultiplier = 78;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MAX;
                 }
             }
             else
             {
                 AudioPlaybackMultiplier++;
-                if (AudioPlaybackMultiplier >= 78)
+                if (AudioPlaybackMultiplier > AUDIO_MULT_MAX)
                 {
-                    AudioPlaybackMultiplier = 78;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MAX;
                 }
             }
             
@@ -160,6 +167,7 @@ ButtonStates ButtonHandler(void)
             ButtonPressCounter++;
             if (ButtonPressCounter >= 12)
             {
+                AudioPlaybackMultiplier = AUDIO_MULT_BASE;
                 return _ButtonPopThreshReached;
             }
             
@@ -168,20 +176,21 @@ ButtonStates ButtonHandler(void)
         else
         {
             // Button not pressed, count timeout and period
+            ButtonHoldDetector = ButtonVal;
             ButtonPeriodCounter++;
             
-            if (ButtonPeriodCounter >= 8)
+            if (ButtonPeriodCounter >= THRESH_ButtonPeriodSlowdown)
             {
                 AudioPlaybackMultiplier--;
-                if (AudioPlaybackMultiplier <= 50)
+                if (AudioPlaybackMultiplier < AUDIO_MULT_MIN)
                 {
-                    AudioPlaybackMultiplier = 50;
+                    AudioPlaybackMultiplier = AUDIO_MULT_MIN;
                 }
             }
             
             ButtonTimeoutCounter++;
             
-            if (ButtonTimeoutCounter >= 15)
+            if (ButtonTimeoutCounter >= THRESH_ButtonTimeout)
             {
                 ButtonTimeoutCounter = 0;
                 ButtonPeriodCounter = 0;
@@ -196,29 +205,6 @@ ButtonStates ButtonHandler(void)
     }
     
     return _ButtonTimeout;
-}
-
-/*
- *    Use 8 bit Timer0
- *    10ms tick wouldn't be bad
- *    Poll
- *    Run tasks   
- */
-
-/*
- *    Timer 0 running 10ms tick, no interrupts
- */
-void ScheduleTimerSetup(void)
-{
-    OCR0A = 0x270F; // 9999 with N = 8 for 10ms tick
-    
-    // Tmr0 No outputs, Setup for CTC mode
-    TCCR0A = 0b00000010;
-    // Turn off peripherals, CTC mode Prescaler N = 8
-    TCCR0B = 0b00000010;
-    
-    TCNT0 = 0;
-    TIFR0 |= 0b00000010;    // Clear flag
 }
 
 const UINT_8 RoutineChooser[30] =
