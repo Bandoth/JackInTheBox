@@ -27,42 +27,43 @@
  *    pin 41
  */
  
-#define SERVO_1_OPEN  20
-#define SERVO_2_OPEN  160
-#define SERVO_1_CLOSE  160
-#define SERVO_2_CLOSE  20
+#define SERVO_1_OPEN                20
+#define SERVO_2_OPEN                160
+#define SERVO_1_CLOSE               160
+#define SERVO_2_CLOSE               20
 
-#define BUTTONTASKDELAY             1
 #define THRESH_ButtonTimeout        100
 #define THRESH_ButtonPeriodSlowdown 25
 #define THRESH_ButtonPop            20
+#define THRESH_WeaselMusicTimer     380
 
-#define AUDIO_MULT_BASE   64
-#define AUDIO_MULT_MIN    50
-#define AUDIO_MULT_MAX    78
+#define AUDIO_MULT_BASE             64
+#define AUDIO_MULT_MIN              50
+#define AUDIO_MULT_MAX              78
 
-#define PinLidServo1  5
-#define PinLidServo2  6
-#define PinNeckServo  7
-#define PinTorsoServo 44
-#define PinStabServo  45
-#define PinWaveServo  46
-#define PinTalkServo  8
+#define PinLidServo1                5
+#define PinLidServo2                6
+#define PinNeckServo                7
+#define PinTorsoServo               44
+#define PinStabServo                45
+#define PinWaveServo                46
+#define PinTalkServo                8
 
-#define PinLEDOptics1 30
-#define PinLEDOptics2 31
-#define PinLEDBox1    32
-#define PinLEDBox2    33
-#define PinLEDBox3    34
-#define PinLEDBox4    35
-#define PinLEDBox5    36
-#define PinLEDBox6    37
-#define PinLEDBox7    38
-#define PinLEDBox8    39
+#define PinLEDOptics1               30
+#define PinLEDOptics2               31
+#define PinLEDBox1                  32
+#define PinLEDBox2                  33
+#define PinLEDBox3                  34
+#define PinLEDBox4                  35
+#define PinLEDBox5                  36
+#define PinLEDBox6                  37
+#define PinLEDBox7                  38
+#define PinLEDBox8                  39
 
-#define PinActuator   40
-#define PinButtonInp  41
+#define PinActuator                 40
+#define PinButtonInp                41
 
-#define BASETASKTIME  2    // BASETASKTIME * 10ms = rate we run
+#define BASETASKTIME                2    // BASETASKTIME * 10ms = rate we run = 20ms
+#define BUTTONTASKDELAY             1    // ThisTaskTime * BASETASKTIME * 10ms = rate this is called = 20ms
  
  #endif

@@ -7,6 +7,7 @@ UINT_16 ButtonPeriodCounter = 0;
 UINT_16 ButtonTimeoutCounter = 0;
 UINT_8 ButtonHoldDetector = 0;
 UINT_8 ButtonPressCounter = 0;
+UINT_16 ButtonPopTimer = 0;
 
 void JackStateHandler(void)
 {
@@ -14,13 +15,14 @@ void JackStateHandler(void)
     {
     case _Waiting:
         AudioPlaybackMultiplier = 64;
+        ButtonPopTimer = 0;
         
         DelayCounter++;
         if (DelayCounter >= BUTTONTASKDELAY)
         {
             DelayCounter = 0;
-            ButtonState = ButtonHandler();
             
+            ButtonState = ButtonHandler();
             if ((ButtonState != _ButtonWaiting) && (ButtonState != _ButtonTimeout))
             {
                 Serial.println("Button Press Playing");
@@ -33,20 +35,24 @@ void JackStateHandler(void)
         if (DelayCounter >= BUTTONTASKDELAY)
         {
             DelayCounter = 0;
-            ButtonState = ButtonHandler();
+            ButtonPopTimer++;
             
+            ButtonState = ButtonHandler();
             if (ButtonState == _ButtonTimeout)
             {
+                ButtonPopTimer = 0;
                 ButtonTimeoutCounter = 0;
                 ButtonPeriodCounter = 0;
                 ButtonPressCounter = 0;
+                
                 if (wave.isplaying)
                 {
                     wave.stop();
                 }
+                
                 JackBoxState = _Waiting;
             }
-            else if (ButtonState == _ButtonPopThreshReached)
+            else if ((ButtonState == _ButtonPopThreshReached) || (ButtonPopTimer >= THRESH_WeaselMusicTimer))
             {
                 Serial.println("Button Pop Reached");
                 //PopStartup();
@@ -56,6 +62,11 @@ void JackStateHandler(void)
         }
         break;
     case _Popped:
+        ButtonPopTimer = 0;
+        ButtonTimeoutCounter = 0;
+        ButtonPeriodCounter = 0;
+        ButtonPressCounter = 0;
+        
         if (!wave.isplaying)
         {
             DelayCounter++;
