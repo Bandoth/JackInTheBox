@@ -31,7 +31,8 @@ typedef enum
     _Routine2,
     _Routine3,
     _Routine4,
-    _Routine5
+    _Routine5,
+    _RoutineTest
 } JackRoutine;
 
 typedef enum
@@ -42,7 +43,8 @@ typedef enum
     _AudioRoutine2,
     _AudioRoutine3,
     _AudioRoutine4,
-    _AudioRoutine5
+    _AudioRoutine5,
+    _AudioTest
 } SelectedAudio;
 
 typedef enum

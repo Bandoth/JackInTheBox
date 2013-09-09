@@ -32,8 +32,10 @@
 #define SERVO_1_CLOSE  160
 #define SERVO_2_CLOSE  20
 
-#define THRESH_ButtonTimeout        60
-#define THRESH_ButtonPeriodSlowdown 8
+#define BUTTONTASKDELAY             1
+#define THRESH_ButtonTimeout        100
+#define THRESH_ButtonPeriodSlowdown 25
+#define THRESH_ButtonPop            20
 
 #define AUDIO_MULT_BASE   64
 #define AUDIO_MULT_MIN    50
@@ -61,6 +63,6 @@
 #define PinActuator   40
 #define PinButtonInp  41
 
-#define BASETASKTIME  10    // BASETASKTIME * 10ms = rate we run
+#define BASETASKTIME  2    // BASETASKTIME * 10ms = rate we run
  
  #endif

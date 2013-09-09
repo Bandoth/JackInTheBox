@@ -18,15 +18,15 @@ void ServoHandler(void)
     switch (servoState)
     {
     case 1:
-        WriteServo(_LidServo1, SERVO_1_OPEN);
-        WriteServo(_LidServo2, SERVO_2_OPEN);
+        WriteServo(_LidServo1, SERVO_1_CLOSE);
+        WriteServo(_LidServo2, SERVO_2_CLOSE);
         WriteServo(_NeckServo, 65);
         WriteServo(_TorsoServo, 65);
         WriteServo(_StabServo, 65);
         WriteServo(_WaveServo, 65);
         WriteServo(_TalkServo, 65);
 
-        Serial.println("Close");
+//        Serial.println("Servos Close");
         break;
 
     case 2:
@@ -38,12 +38,12 @@ void ServoHandler(void)
         WriteServo(_WaveServo, 135);
         WriteServo(_TalkServo, 135);
 
-        Serial.println("Close");
+//        Serial.println("Servos Open");
         break;
 
     default:
         servoState = 0;
-        Serial.println("Reset");
+//        Serial.println("Servos Reset");
         break;
     }
 

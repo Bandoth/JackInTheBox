@@ -5,6 +5,7 @@ void MusicStateMachine(void)
 {
     if (!AudioRateSet)
     {
+        Serial.println("Audio Setting base rate");
         BaseAudioRate = wave.dwSamplesPerSec;
         AudioRateSet = 1;
     }
@@ -15,6 +16,7 @@ void MusicStateMachine(void)
         CurrentAudio = _AudioNone;
         if (wave.isplaying)
         {
+            Serial.println("Audio Stopping for Wait");
             wave.stop();
         }
         sdErrorCheck();    // everything OK?
@@ -22,6 +24,7 @@ void MusicStateMachine(void)
     case _Playing:
         if ((CurrentAudio == _AudioNone) || (CurrentAudio != _AudioPop))
         {
+            Serial.println("Audio Starting Weasel");
             PlayPopGoesTheWeasel();
         }
 
@@ -30,7 +33,8 @@ void MusicStateMachine(void)
     case _Popped:
         if ((CurrentAudio == _AudioNone) || (CurrentAudio == _AudioPop))
         {
-            PlayPopGoesTheWeasel();
+            Serial.println("Audio Starting Pop");
+            PlayRoutine(_RoutineTest);
 //            PlayRoutine(SelectedRoutine);
         }
         break;
@@ -50,6 +54,7 @@ void PlayPopGoesTheWeasel(void)
 
     if (wave.isplaying) // already playing something, so stop it!
     {
+        Serial.println("Audio Stopping to Restart Weasel");
         wave.stop(); // stop it
     }
     if (!file.open(root, name)) 
@@ -95,6 +100,10 @@ void PlayRoutine(JackRoutine CurrentRoutine)
     case _Routine5:
         strcpy_P(name, PSTR("R5.WAV"));
         CurrentAudio = _AudioRoutine5;
+        break;
+    case _RoutineTest:
+        strcpy_P(name, PSTR("TEST.WAV"));
+        CurrentAudio = _AudioTest;
         break;
     default:
         strcpy_P(name, PSTR("R1.WAV"));

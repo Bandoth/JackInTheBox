@@ -52,8 +52,6 @@ void setup()
 /* Loop routine runs continuously forever */
 void loop()
 {
-//    JackBoxState = _Playing;
-
     if((millis() - ScheduleTimer) >= 10)
     {
         DelCounter++;

@@ -16,26 +16,30 @@ void JackStateHandler(void)
         AudioPlaybackMultiplier = 64;
         
         DelayCounter++;
-        if (DelayCounter >= 5)
+        if (DelayCounter >= BUTTONTASKDELAY)
         {
             DelayCounter = 0;
             ButtonState = ButtonHandler();
             
             if ((ButtonState != _ButtonWaiting) && (ButtonState != _ButtonTimeout))
             {
+                Serial.println("Button Press Playing");
                 JackBoxState = _Playing;
             }
         }
         break;
     case _Playing:
         DelayCounter++;
-        if (DelayCounter >= 5)
+        if (DelayCounter >= BUTTONTASKDELAY)
         {
             DelayCounter = 0;
             ButtonState = ButtonHandler();
             
             if (ButtonState == _ButtonTimeout)
             {
+                ButtonTimeoutCounter = 0;
+                ButtonPeriodCounter = 0;
+                ButtonPressCounter = 0;
                 if (wave.isplaying)
                 {
                     wave.stop();
@@ -44,8 +48,10 @@ void JackStateHandler(void)
             }
             else if (ButtonState == _ButtonPopThreshReached)
             {
+                Serial.println("Button Pop Reached");
                 //PopStartup();
                 JackBoxState = _Popped;
+                ButtonPressCounter = 0;
             }
         }
         break;
@@ -79,12 +85,17 @@ ButtonStates ButtonHandler(void)
     case _Waiting:
         ButtonVal = digitalRead(PinButtonInp);
         
-        if (ButtonVal == 1)
+        if ((ButtonVal == 1) && (ButtonHoldDetector == 0))
         {
             ButtonHoldDetector = ButtonVal;
             ButtonPressCounter++;
             return _ButtonPressesDetected;
         }
+        else if ((ButtonVal == 0) && (ButtonHoldDetector == 1))
+        {
+            ButtonHoldDetector = 0;
+        }
+        return _ButtonWaiting;
         break;
     case _Playing:
         ButtonVal = digitalRead(PinButtonInp);
@@ -92,6 +103,8 @@ ButtonStates ButtonHandler(void)
         if ((ButtonVal == 1) && (ButtonHoldDetector == 1))
         {
             // Holding button, count period, count to timeout
+            Serial.println("Button Hold Detected");
+            
             ButtonPeriodCounter++;
             
             if (ButtonPeriodCounter >= THRESH_ButtonPeriodSlowdown)
@@ -107,14 +120,17 @@ ButtonStates ButtonHandler(void)
             
             if (ButtonTimeoutCounter >= THRESH_ButtonTimeout)
             {
+                Serial.println("Button TO Hold");
                 ButtonTimeoutCounter = 0;
                 ButtonPeriodCounter = 0;
+                ButtonPressCounter = 0;
                 return _ButtonTimeout;
             }
         }
         else if ((ButtonVal == 0) && (ButtonHoldDetector == 1))
         {
             // Button released, reset timeout, count period
+            Serial.println("Button Release Detected");
             ButtonHoldDetector = ButtonVal;
             ButtonPeriodCounter++;
             
@@ -134,6 +150,8 @@ ButtonStates ButtonHandler(void)
         else if (ButtonVal == 1)
         {
             // Button pressed, reset timeout, update global period
+            Serial.println("Button Press Detected");
+            
             ButtonHoldDetector = ButtonVal;
             ButtonTimeoutCounter = 0;
             
@@ -165,7 +183,7 @@ ButtonStates ButtonHandler(void)
             ButtonPeriodCounter = 0;
             
             ButtonPressCounter++;
-            if (ButtonPressCounter >= 12)
+            if (ButtonPressCounter >= THRESH_ButtonPop)
             {
                 AudioPlaybackMultiplier = AUDIO_MULT_BASE;
                 return _ButtonPopThreshReached;
@@ -192,8 +210,10 @@ ButtonStates ButtonHandler(void)
             
             if (ButtonTimeoutCounter >= THRESH_ButtonTimeout)
             {
+                Serial.println("Button TO Idle");
                 ButtonTimeoutCounter = 0;
                 ButtonPeriodCounter = 0;
+                ButtonPressCounter = 0;
                 return _ButtonTimeout;
             }
         }
@@ -204,7 +224,7 @@ ButtonStates ButtonHandler(void)
         break;
     }
     
-    return _ButtonTimeout;
+    return _ButtonWaiting;
 }
 
 const UINT_8 RoutineChooser[30] =
