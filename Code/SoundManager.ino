@@ -18,15 +18,7 @@ void MusicStateMachine(void)
         if ((CurrentAudio == _AudioNone) || (CurrentAudio != _AudioPop))
         {
             Serial.println("Audio Starting Weasel");
-            PlayPopGoesTheWeasel();
-            
-            if (!AudioRateSet)
-            {
-                Serial.println("Audio Setting base rate");
-                BaseAudioRate = wave.dwSamplesPerSec;
-                Serial.println(BaseAudioRate);
-                AudioRateSet = 1;
-            }
+            PlayRoutine(_RoutineWeasel);
         }
 
         AudioSpeedHandler();
@@ -36,44 +28,12 @@ void MusicStateMachine(void)
         {
             Serial.println("Audio Starting Pop");
             PlayRoutine(_RoutineTest);
-//            PlayRoutine(SelectedRoutine);
+            //            PlayRoutine(SelectedRoutine);
         }
         break;
     default:
         break;
     }
-    //    PlayPopGoesTheWeasel();
-}
-
-void PlayPopGoesTheWeasel(void)
-{
-    char name[13];
-
-    // copy flash string for 'period' to filename
-    strcpy_P(name, PSTR("WEASEL.WAV"));
-    CurrentAudio = _AudioPop;
-
-    if (wave.isplaying) // already playing something, so stop it!
-    {
-        Serial.println("Audio Stopping to Restart Weasel");
-        wave.stop(); // stop it
-    }
-    if (!file.open(root, name)) 
-    {
-        PgmPrint("Couldn't open file ");
-        Serial.print(name);
-        while(1); 
-    }
-    if (!wave.create(file)) 
-    {
-        PgmPrintln("Not a valid WAV");
-        while(1);
-    }
-
-    wave.volume = 0;  // Volume Control 5 = Very Soft, 0 = LOUD
-
-    // ok time to play!
-    wave.play();
 }
 
 void PlayRoutine(JackRoutine CurrentRoutine)
@@ -101,6 +61,10 @@ void PlayRoutine(JackRoutine CurrentRoutine)
     case _Routine5:
         strcpy_P(name, PSTR("R5.WAV"));
         CurrentAudio = _AudioRoutine5;
+        break;
+    case _RoutineWeasel:
+        strcpy_P(name, PSTR("WEASEL.WAV"));
+        CurrentAudio = _AudioPop;
         break;
     case _RoutineTest:
         strcpy_P(name, PSTR("TEST.WAV"));
@@ -133,6 +97,14 @@ void PlayRoutine(JackRoutine CurrentRoutine)
 
     // ok time to play!
     wave.play();
+
+    if (!AudioRateSet)
+    {
+        Serial.println("Audio Setting base rate");
+        BaseAudioRate = wave.dwSamplesPerSec;
+        Serial.println(BaseAudioRate);
+        AudioRateSet = 1;
+    }
 }
 
 void AudioSpeedHandler(void)
@@ -147,10 +119,11 @@ void AudioSpeedHandler(void)
         {
             Serial.println("Audio Changing rate");
             Serial.println(AudioRate);
-//            AudioRate = AudioRate * 78;
+            Serial.println("Multiplier");
+            Serial.println(AudioPlaybackMultiplier);
             AudioRate = AudioRate * ((UINT_32)AudioPlaybackMultiplier);
             Serial.println(AudioRate);
-            AudioRate = AudioRate >> 6;
+            AudioRate = AudioRate >> AUDIO_MULT_SHIFT;
             Serial.println(AudioRate);
 
             wave.setSampleRate(AudioRate);
@@ -338,5 +311,6 @@ UINT_32 AudioRate;
  //        counter = 0;
  }
  */
+
 
 

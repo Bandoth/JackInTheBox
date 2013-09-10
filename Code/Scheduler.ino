@@ -14,7 +14,7 @@ void JackStateHandler(void)
     switch (JackBoxState)
     {
     case _Waiting:
-        AudioPlaybackMultiplier = 64;
+        AudioPlaybackMultiplier = AUDIO_MULT_BASE;
         ButtonPopTimer = 0;
         
         DelayCounter++;
@@ -53,12 +53,17 @@ void JackStateHandler(void)
                 
                 JackBoxState = _Waiting;
             }
-            else if ((ButtonState == _ButtonPopThreshReached) || (ButtonPopTimer >= THRESH_WeaselMusicTimer))
+            else if (ButtonState == _ButtonPopThreshReached)
             {
                 Serial.println("Button Pop Reached");
                 //PopStartup();
                 JackBoxState = _Popped;
                 ButtonPressCounter = 0;
+            }
+            
+            if (ButtonPopTimer >= THRESH_WeaselMusicTimer)
+            {
+                ButtonPressCounter = 100;
             }
         }
         break;

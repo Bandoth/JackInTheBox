@@ -32,6 +32,7 @@ typedef enum
     _Routine3,
     _Routine4,
     _Routine5,
+    _RoutineWeasel,
     _RoutineTest
 } JackRoutine;
 

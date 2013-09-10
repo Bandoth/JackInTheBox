@@ -10,7 +10,7 @@ FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
 FatReader file;   // This object represent the WAV file for a pi digit or period
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
-UINT_8 AudioPlaybackMultiplier = 64;
+UINT_16 AudioPlaybackMultiplier = AUDIO_MULT_BASE;
 UINT_32 BaseAudioRate;
 UINT_8 AudioRateSet = 0;
 

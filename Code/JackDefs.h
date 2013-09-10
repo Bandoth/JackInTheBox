@@ -33,13 +33,14 @@
 #define SERVO_2_CLOSE               20
 
 #define THRESH_ButtonTimeout        60
-#define THRESH_ButtonPeriodSlowdown 15
-#define THRESH_ButtonPop            20
-#define THRESH_WeaselMusicTimer     380
+#define THRESH_ButtonPeriodSlowdown 11
+#define THRESH_ButtonPop            18
+#define THRESH_WeaselMusicTimer     320
 
-#define AUDIO_MULT_BASE             64
-#define AUDIO_MULT_MIN              58
-#define AUDIO_MULT_MAX              70
+#define AUDIO_MULT_BASE             128
+#define AUDIO_MULT_MIN              116
+#define AUDIO_MULT_MAX              140
+#define AUDIO_MULT_SHIFT            7
 
 #define PinLidServo1                5
 #define PinLidServo2                6
@@ -65,6 +66,6 @@
 
 #define BASETASKTIME                2    // BASETASKTIME * 10ms = rate we run = 20ms
 #define BUTTONTASKDELAY             1    // ThisTaskTime * BASETASKTIME * 10ms = rate this is called = 20ms
-#define AUDIORATETASKDELAY          30   // ThisTaskTIme * BASETASKTIME * 10ms = rate this is handled = 200ms
+#define AUDIORATETASKDELAY          10   // ThisTaskTIme * BASETASKTIME * 10ms = rate this is handled = 200ms
  
  #endif
