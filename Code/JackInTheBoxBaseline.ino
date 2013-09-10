@@ -41,7 +41,7 @@ void setup()
     WriteServo(_LidServo1, SERVO_1_OPEN);
     WriteServo(_LidServo2, SERVO_2_OPEN);
     WriteServo(_NeckServo, 90);
-    WriteServo(_TorsoServo, 90);
+    WriteServo(_FlowerServo, 90);
     WriteServo(_StabServo, 90);
     WriteServo(_WaveServo, 90);
     WriteServo(_TalkServo, 90);

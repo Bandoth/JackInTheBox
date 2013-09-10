@@ -12,7 +12,7 @@ typedef enum
     _LidServo1, 
     _LidServo2,
     _NeckServo,
-    _TorsoServo,
+    _FlowerServo,
     _StabServo,
     _WaveServo,
     _TalkServo 

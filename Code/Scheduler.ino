@@ -120,7 +120,7 @@ ButtonStates ButtonHandler(void)
         if ((ButtonVal == 1) && (ButtonHoldDetector == 1))
         {
             // Holding button, count period, count to timeout
-            Serial.println("Button Hold Detected");
+//            Serial.println("Button Hold Detected");
             
             ButtonPeriodCounter++;
             

@@ -64,6 +64,39 @@
 #define PinActuator                 40
 #define PinButtonInp                41
 
+#define COLUMN_ACTION               0
+#define COLUMN_DELAY                1
+
+#define TABLELEN_Neck1              3
+#define TABLELEN_Neck2              3
+#define TABLELEN_Neck3              3
+#define TABLELEN_Neck4              3
+#define TABLELEN_Neck5              3
+
+#define TABLELEN_Flower1            3
+#define TABLELEN_Flower2            3
+#define TABLELEN_Flower3            3
+#define TABLELEN_Flower4            3
+#define TABLELEN_Flower5            3
+
+#define TABLELEN_Stab1              3
+#define TABLELEN_Stab2              3
+#define TABLELEN_Stab3              3
+#define TABLELEN_Stab4              3
+#define TABLELEN_Stab5              3
+
+#define TABLELEN_Wave1              3
+#define TABLELEN_Wave2              3
+#define TABLELEN_Wave3              3
+#define TABLELEN_Wave4              3
+#define TABLELEN_Wave5              3
+
+#define TABLELEN_Talk1              3
+#define TABLELEN_Talk2              3
+#define TABLELEN_Talk3              3
+#define TABLELEN_Talk4              3
+#define TABLELEN_Talk5              3
+
 #define BASETASKTIME                2    // BASETASKTIME * 10ms = rate we run = 20ms
 #define BUTTONTASKDELAY             1    // ThisTaskTime * BASETASKTIME * 10ms = rate this is called = 20ms
 #define AUDIORATETASKDELAY          10   // ThisTaskTIme * BASETASKTIME * 10ms = rate this is handled = 200ms
