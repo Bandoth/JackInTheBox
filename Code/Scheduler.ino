@@ -47,6 +47,7 @@ void JackStateHandler(void)
                 
                 if (wave.isplaying)
                 {
+                    Serial.println("AudioStop ButtonTO");
                     wave.stop();
                 }
                 

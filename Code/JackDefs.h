@@ -32,8 +32,8 @@
 #define SERVO_1_CLOSE               160
 #define SERVO_2_CLOSE               20
 
-#define THRESH_ButtonTimeout        100
-#define THRESH_ButtonPeriodSlowdown 25
+#define THRESH_ButtonTimeout        80
+#define THRESH_ButtonPeriodSlowdown 15
 #define THRESH_ButtonPop            20
 #define THRESH_WeaselMusicTimer     380
 
@@ -65,5 +65,6 @@
 
 #define BASETASKTIME                2    // BASETASKTIME * 10ms = rate we run = 20ms
 #define BUTTONTASKDELAY             1    // ThisTaskTime * BASETASKTIME * 10ms = rate this is called = 20ms
+#define AUDIORATETASKDELAY          10   // ThisTaskTIme * BASETASKTIME * 10ms = rate this is handled = 200ms
  
  #endif

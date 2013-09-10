@@ -1,5 +1,5 @@
 SelectedAudio CurrentAudio = _AudioNone;
-UINT_8 AudioRateDelay = 0;
+UINT_16 AudioRateDelay = 0;
 
 void MusicStateMachine(void)
 {
@@ -113,6 +113,7 @@ void PlayRoutine(JackRoutine CurrentRoutine)
 
     if (wave.isplaying) // already playing something, so stop it!
     {
+        Serial.println("AudioStop to play Routine");
         wave.stop(); // stop it
     }
     if (!file.open(root, name)) 
@@ -138,7 +139,7 @@ void AudioSpeedandTimeout(void)
     UINT_32 AudioRate = BaseAudioRate;
     AudioRateDelay++;
 /*
-    if (AudioRateDelay >= 10)
+    if (AudioRateDelay >= AUDIORATETASKDELAY)
     {
         AudioRateDelay = 0;
         if ((JackBoxState == _Playing) && (wave.isplaying))
@@ -152,7 +153,8 @@ void AudioSpeedandTimeout(void)
         {
             wave.setSampleRate(AudioRate);
         }
-    }*/
+    }
+*/
 }
 
 void SDCardInit(void)
