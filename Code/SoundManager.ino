@@ -3,13 +3,6 @@ UINT_16 AudioRateDelay = 0;
 
 void MusicStateMachine(void)
 {
-    if (!AudioRateSet)
-    {
-        Serial.println("Audio Setting base rate");
-        BaseAudioRate = wave.dwSamplesPerSec;
-        AudioRateSet = 1;
-    }
-
     switch (JackBoxState)
     {
     case _Waiting:
@@ -26,9 +19,17 @@ void MusicStateMachine(void)
         {
             Serial.println("Audio Starting Weasel");
             PlayPopGoesTheWeasel();
+            
+            if (!AudioRateSet)
+            {
+                Serial.println("Audio Setting base rate");
+                BaseAudioRate = wave.dwSamplesPerSec;
+                Serial.println(BaseAudioRate);
+                AudioRateSet = 1;
+            }
         }
 
-        AudioSpeedandTimeout();
+        AudioSpeedHandler();
         break;
     case _Popped:
         if ((CurrentAudio == _AudioNone) || (CurrentAudio == _AudioPop))
@@ -134,27 +135,32 @@ void PlayRoutine(JackRoutine CurrentRoutine)
     wave.play();
 }
 
-void AudioSpeedandTimeout(void)
+void AudioSpeedHandler(void)
 {
     UINT_32 AudioRate = BaseAudioRate;
     AudioRateDelay++;
-/*
+
     if (AudioRateDelay >= AUDIORATETASKDELAY)
     {
         AudioRateDelay = 0;
         if ((JackBoxState == _Playing) && (wave.isplaying))
         {
-            AudioRate = AudioRate * AudioPlaybackMultiplier;
+            Serial.println("Audio Changing rate");
+            Serial.println(AudioRate);
+//            AudioRate = AudioRate * 78;
+            AudioRate = AudioRate * ((UINT_32)AudioPlaybackMultiplier);
+            Serial.println(AudioRate);
             AudioRate = AudioRate >> 6;
+            Serial.println(AudioRate);
 
             wave.setSampleRate(AudioRate);
+            Serial.println("Audio Rate Set");
         }
         else if (wave.isplaying)
         {
             wave.setSampleRate(AudioRate);
         }
     }
-*/
 }
 
 void SDCardInit(void)
