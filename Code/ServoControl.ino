@@ -1,9 +1,6 @@
 #include "Typedefs.h"
 #define SERVODEGREES_0 0x03E8
 
-const byte myAddress = 0;
-const byte myVal = 42;  // byte = unsigned 8 bit, char = signed 8 bit
-
 byte servoState = 0;
 
 UINT_16 ServoCounterNeck = 999;
@@ -40,7 +37,6 @@ void ServoStateMachine(void)
 {
     switch (JackBoxState)
     {
-    
     case _Popped:
         PlayRoutine();
         break;
@@ -49,57 +45,6 @@ void ServoStateMachine(void)
     default:
         break;
     }
-}
-
-void ServoHandler(void)
-{
-    servoState++;
-
-    switch (servoState)
-    {
-    case 1:
-        WriteServo(_LidServo1, SERVO_1_CLOSE);
-        WriteServo(_LidServo2, SERVO_2_CLOSE);
-        WriteServo(_NeckServo, 65);
-        WriteServo(_FlowerServo, 65);
-        WriteServo(_StabServo, 65);
-        WriteServo(_WaveServo, 65);
-        WriteServo(_TalkServo, 65);
-
-//        Serial.println("Servos Close");
-        break;
-
-    case 2:
-        WriteServo(_LidServo1, SERVO_1_OPEN);
-        WriteServo(_LidServo2, SERVO_2_OPEN);
-        WriteServo(_NeckServo, 135);
-        WriteServo(_FlowerServo, 135);
-        WriteServo(_StabServo, 135);
-        WriteServo(_WaveServo, 135);
-        WriteServo(_TalkServo, 135);
-
-//        Serial.println("Servos Open");
-        break;
-
-    default:
-        servoState = 0;
-//        Serial.println("Servos Reset");
-        break;
-    }
-
-    /*
-  byte EEPROM_Write_Successful = false;
-     
-     EEPROM_Write_Successful = CustomEEPROMWrite(myAddress, myVal);
-     if (EEPROM_Write_Successful)
-     {
-     myservo.write(90);
-     }
-     else
-     {
-     myservo.write(0);
-     }
-     */
 }
 
 void PlayRoutine(void)

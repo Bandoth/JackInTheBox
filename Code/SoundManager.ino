@@ -139,7 +139,7 @@ void AudioSpeedHandler(void)
 void SDCardInit(void)
 {
     Serial.begin(9600);  
-    putstring_nl("\nWave test!");  // say we woke up!
+//    putstring_nl("\nWave test!");  // say we woke up!
 
     putstring("Free RAM: ");       // This can help with debugging, running out of RAM is bad
     Serial.println(FreeRam());

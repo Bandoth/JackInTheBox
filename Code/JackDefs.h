@@ -34,8 +34,6 @@
 
 #define THRESH_ButtonTimeout        60
 #define THRESH_ButtonPeriodSlowdown 11
-#define THRESH_ButtonPop            18
-#define THRESH_WeaselMusicTimer     320
 
 #define AUDIO_MULT_BASE             128
 #define AUDIO_MULT_MIN              116
@@ -100,5 +98,14 @@
 #define BASETASKTIME                2    // BASETASKTIME * 10ms = rate we run = 20ms
 #define BUTTONTASKDELAY             1    // ThisTaskTime * BASETASKTIME * 10ms = rate this is called = 20ms
 #define AUDIORATETASKDELAY          10   // ThisTaskTIme * BASETASKTIME * 10ms = rate this is handled = 200ms
- 
+
+#define EEPROMAddr_FirstWrite       1
+#define EEPROMAddr_ButtonIndex      2
+#define EEPROMAddr_PopTimerIndex    3
+#define EEPROMAddr_RoutineIndex     4
+
+#define PSEUDO_MaxRoutineChooser    29
+#define PSEUDO_MaxPressChooser      29
+#define PSEUDO_MaxTimerChooser      50
+
  #endif
