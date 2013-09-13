@@ -3,8 +3,8 @@
 
 #define NUMRoutineColumns 2
 
-#define TALK_Open         20
-#define TALK_Half         20
+#define TALK_Open         140
+#define TALK_Half         120
 #define TALK_Close        20
 #define TALK_Neutral      TALK_Close
 
@@ -50,10 +50,10 @@
 #define TABLELEN_Wave5              3
 
 #define TABLELEN_Talk1              17
-#define TABLELEN_Talk2              6
-#define TABLELEN_Talk3              6
-#define TABLELEN_Talk4              6
-#define TABLELEN_Talk5              6
+#define TABLELEN_Talk2              22
+#define TABLELEN_Talk3              12
+#define TABLELEN_Talk4              12
+#define TABLELEN_Talk5              29
 
 #define COLUMN_ACTION    0
 #define COLUMN_DELAY     1

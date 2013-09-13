@@ -30,13 +30,18 @@ const UINT_16 ServoRoutineWave_3[TABLELEN_Wave3][NUMRoutineColumns] =
 
 const UINT_16 ServoRoutineTalk_3[TABLELEN_Talk3][NUMRoutineColumns] = 
 {
-    { TALK_Neutral, 1 },
-    { TALK_Neutral, 70 },
-    { TALK_Open, 10 },
-    { TALK_Half, 5 },
-    { TALK_Open, 20 },
-    { TALK_Close, 10 },
-
+    { TALK_Neutral, 1   },
+    { TALK_Neutral, 35  },
+    { TALK_Open,    15  },
+    { TALK_Half,    5   },
+    { TALK_Open,    5   },
+    { TALK_Half,    10  },
+    { TALK_Open,    5   },
+    { TALK_Half,    5   },
+    { TALK_Open,    5   },
+    { TALK_Half,    25  },
+    { TALK_Close,   20  },
+    { TALK_Neutral, 145 }   
 };
 
 const UINT_16 LED1Routine3[3][NUMRoutineColumns] = 
