@@ -76,9 +76,10 @@ void JackStateHandler(void)
         if (!wave.isplaying)
         {
             DelayCounter++;
-            if (DelayCounter >= 150)
+            if (DelayCounter >= 50)
             {
                 //PopShutdown();
+                NextRoutine();
                 JackBoxState = _Waiting;
             }
         }

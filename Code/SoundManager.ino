@@ -6,13 +6,24 @@ void MusicStateMachine(void)
     switch (JackBoxState)
     {
     case _Waiting:
+        /** TEST CODE **/
+        /*        
+        if (!wave.isplaying)
+        {
+            PlayRoutine(_RoutineWeasel);
+        }
+        */
+        /** END TEST CODE **/
+        
+        
         CurrentAudio = _AudioNone;
         if (wave.isplaying)
         {
             Serial.println("Audio Stopping for Wait");
             wave.stop();
         }
-        sdErrorCheck();    // everything OK?
+        //sdErrorCheck();    // everything OK?
+        
         break;
     case _Playing:
         if ((CurrentAudio == _AudioNone) || (CurrentAudio != _AudioPop))
@@ -27,8 +38,8 @@ void MusicStateMachine(void)
         if ((CurrentAudio == _AudioNone) || (CurrentAudio == _AudioPop))
         {
             Serial.println("Audio Starting Pop");
-            PlayRoutine(_RoutineTest);
-            //            PlayRoutine(SelectedRoutine);
+            //PlayRoutine(_RoutineTest);
+            PlayRoutine(SelectedRoutine);
         }
         break;
     default:

@@ -15,7 +15,7 @@
  *    LidServo1    = pin 5
  *    LidServo2    = pin 6
  *    NeckServo    = pin 7
- *    TorsoServo   = pin 44
+ *    FlowerServo   = pin 44
  *    StabServo    = pin 45
  *    WaveServo    = pin 46
  *    TalkServo    = pin 8
@@ -26,6 +26,8 @@
  * Button Input
  *    pin 41
  */
+ 
+ //#define TESTRUN                  1
  
 #define SERVO_1_OPEN                20
 #define SERVO_2_OPEN                160
@@ -105,6 +107,7 @@
 #define EEPROMAddr_RoutineIndex     4
 
 #define PSEUDO_MaxRoutineChooser    29
+//#define PSEUDO_MaxRoutineChooser    1
 #define PSEUDO_MaxPressChooser      29
 #define PSEUDO_MaxTimerChooser      50
 
