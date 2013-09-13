@@ -1,8 +1,27 @@
-
+UINT_8 DelCounter_LED = 0;
 
 void LEDStateMachine(void)
 {
+    if (JackBoxState == _Popped)
+    {
+        DelCounter_LED++;
     
+        if (DelCounter_LED >= 15)
+        {
+            digitalWrite(PinLEDOptics1, LOW);
+            digitalWrite(PinLEDOptics2, LOW);
+        }
+        else
+        {
+            digitalWrite(PinLEDOptics1, HIGH);
+            digitalWrite(PinLEDOptics2, HIGH);
+        }
+    }
+    else
+    {
+        digitalWrite(PinLEDOptics1, LOW);
+        digitalWrite(PinLEDOptics2, LOW);
+    }
 }
 
 void DigitalPinsInit(void)

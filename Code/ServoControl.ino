@@ -285,9 +285,40 @@ void WriteServo(JackServo myServo, UINT_8 setDegrees)
 
 void JackSafeStartup(void)
 {
+    UINT_16 DelCounter_SafeStartup = 0;
     // Set body servos to safe spot
     // Lower actuator
     // Close lid
+    WriteServo(_NeckServo, NECK_Neutral);
+    WriteServo(_TalkServo, TALK_Neutral);
+    WriteServo(_StabServo, STAB_Neutral);
+    WriteServo(_WaveServo, WAVE_Neutral);
+    WriteServo(_FlowerServo, FLOWER_Neutral);
+    
+    digitalWrite(PinActuator, ACTUATOR_Down);
+    
+    DelCounter_SafeStartup = millis();
+    while ((millis() - DelCounter_SafeStartup) < 250);
+    
+    WriteServo(_LidServo1, SERVO_1_CLOSE);
+    WriteServo(_LidServo2, SERVO_2_CLOSE);
+}
+
+void JackSafePop(void)
+{
+    UINT_16 DelCounter_SafePop = 0;
+    // Servos should be in safe location
+    // Pop servos
+    // pause
+    // Pop actuator
+    
+    WriteServo(_LidServo1, SERVO_1_OPEN);
+    WriteServo(_LidServo2, SERVO_2_OPEN);
+    
+    DelCounter_SafePop = millis();
+    while ((millis() - DelCounter_SafePop) < 100);
+    
+    digitalWrite(PinActuator, ACTUATOR_Up);
 }
 
 /*
@@ -331,6 +362,7 @@ void PWMSetup(void)
     TCNT5 = 0; // Enable timers by clearing values
     
     // Init ontime to closed box values
+    /*    
     WriteServo(_LidServo1, SERVO_1_CLOSE);
     WriteServo(_LidServo2, SERVO_2_CLOSE);
     WriteServo(_NeckServo, 90);
@@ -338,7 +370,7 @@ void PWMSetup(void)
     WriteServo(_StabServo, 90);
     WriteServo(_WaveServo, 90);
     WriteServo(_TalkServo, 90);
-    
-    //JackSafeStartup();
+    */
+    JackSafeStartup();
 }
 

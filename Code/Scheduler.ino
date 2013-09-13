@@ -56,7 +56,7 @@ void JackStateHandler(void)
             else if (ButtonState == _ButtonPopThreshReached)
             {
                 Serial.println("Button Pop Reached");
-                //PopStartup();
+                JackSafePop();
                 JackBoxState = _Popped;
                 ButtonPressCounter = 0;
             }
@@ -76,9 +76,9 @@ void JackStateHandler(void)
         if (!wave.isplaying)
         {
             DelayCounter++;
-            if (DelayCounter >= 50)
+            if (DelayCounter >= 10)
             {
-                //PopShutdown();
+                JackSafeStartup();
                 NextRoutine();
                 JackBoxState = _Waiting;
             }

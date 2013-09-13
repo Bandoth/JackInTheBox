@@ -4,6 +4,7 @@
 #include "WaveHC.h"
 #include "Typedefs.h"
 #include "JackDefs.h"
+#include "RoutineDefs.h"
 
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
