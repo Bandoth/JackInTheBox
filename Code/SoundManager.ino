@@ -103,9 +103,13 @@ void PlayRoutine(JackRoutine CurrentRoutine)
         PgmPrintln("Not a valid WAV");
         while(1);
     }
-
+    
     wave.volume = 0;  // Volume Control 5 = Very Soft, 0 = LOUD
-
+    
+    #ifdef TESTRUN
+    wave.volume = 3;
+    #endif
+    
     // ok time to play!
     wave.play();
 

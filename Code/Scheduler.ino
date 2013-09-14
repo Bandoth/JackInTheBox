@@ -76,7 +76,7 @@ void JackStateHandler(void)
         if (!wave.isplaying)
         {
             DelayCounter++;
-            if (DelayCounter >= 10)
+            if (DelayCounter >= 1)
             {
                 JackSafeStartup();
                 NextRoutine();

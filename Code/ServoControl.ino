@@ -60,22 +60,22 @@ void PlayRoutine(void)
     ServoCounterStab++;
     ServoCounterWave++;
     ServoCounterTalk++;
-    
+
     switch (SelectedRoutine)
     {
     case _Routine1:
         ServoDelNeck = ServoRoutineNeck_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_1[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_1[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_1[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_1[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_1[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_1[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_1[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_1[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_1[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck1;
         TableLengthFlower = TABLELEN_Flower1;
         TableLengthStab = TABLELEN_Stab1;
@@ -84,17 +84,17 @@ void PlayRoutine(void)
         break;
     case _Routine2:
         ServoDelNeck = ServoRoutineNeck_2[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_2[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_2[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_2[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_2[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_2[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_2[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_2[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_2[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_2[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_2[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_2[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_2[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_2[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_2[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_2[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_2[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_2[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck2;
         TableLengthFlower = TABLELEN_Flower2;
         TableLengthStab = TABLELEN_Stab2;
@@ -103,17 +103,17 @@ void PlayRoutine(void)
         break;
     case _Routine3:
         ServoDelNeck = ServoRoutineNeck_3[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_3[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_3[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_3[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_3[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_3[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_3[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_3[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_3[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_3[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_3[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_3[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_3[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_3[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_3[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_3[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_3[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_3[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck3;
         TableLengthFlower = TABLELEN_Flower3;
         TableLengthStab = TABLELEN_Stab3;
@@ -122,17 +122,17 @@ void PlayRoutine(void)
         break;
     case _Routine4:
         ServoDelNeck = ServoRoutineNeck_4[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_4[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_4[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_4[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_4[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_4[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_4[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_4[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_4[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_4[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_4[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_4[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_4[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_4[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_4[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_4[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_4[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_4[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck4;
         TableLengthFlower = TABLELEN_Flower4;
         TableLengthStab = TABLELEN_Stab4;
@@ -141,17 +141,17 @@ void PlayRoutine(void)
         break;
     case _Routine5:
         ServoDelNeck = ServoRoutineNeck_5[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_5[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_5[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_5[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_5[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_5[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_5[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_5[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_5[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_5[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_5[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_5[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_5[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_5[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_5[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_5[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_5[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_5[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck5;
         TableLengthFlower = TABLELEN_Flower5;
         TableLengthStab = TABLELEN_Stab5;
@@ -160,17 +160,17 @@ void PlayRoutine(void)
         break;
     default:
         ServoDelNeck = ServoRoutineNeck_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelFlower = ServoRoutineFlower_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelStab = ServoRoutineStab_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelWave = ServoRoutineWave_1[ActionIndexNeck][COLUMN_DELAY];
-        ServoDelTalk = ServoRoutineTalk_1[ActionIndexNeck][COLUMN_DELAY];
-        
+        ServoDelFlower = ServoRoutineFlower_1[ActionIndexFlower][COLUMN_DELAY];
+        ServoDelStab = ServoRoutineStab_1[ActionIndexStab][COLUMN_DELAY];
+        ServoDelWave = ServoRoutineWave_1[ActionIndexWave][COLUMN_DELAY];
+        ServoDelTalk = ServoRoutineTalk_1[ActionIndexTalk][COLUMN_DELAY];
+
         ServoDegreesNeck = ServoRoutineNeck_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesFlower = ServoRoutineFlower_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesStab = ServoRoutineStab_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesWave = ServoRoutineWave_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        ServoDegreesTalk = ServoRoutineTalk_1[ActionIndexNeck + 1][COLUMN_ACTION];
-        
+        ServoDegreesFlower = ServoRoutineFlower_1[ActionIndexFlower + 1][COLUMN_ACTION];
+        ServoDegreesStab = ServoRoutineStab_1[ActionIndexStab + 1][COLUMN_ACTION];
+        ServoDegreesWave = ServoRoutineWave_1[ActionIndexWave + 1][COLUMN_ACTION];
+        ServoDegreesTalk = ServoRoutineTalk_1[ActionIndexTalk + 1][COLUMN_ACTION];
+
         TableLengthNeck = TABLELEN_Neck1;
         TableLengthFlower = TABLELEN_Flower1;
         TableLengthStab = TABLELEN_Stab1;
@@ -178,73 +178,107 @@ void PlayRoutine(void)
         TableLengthTalk = TABLELEN_Talk1;
         break;
     }
-    
-    if (ServoCounterNeck >= ServoDelNeck)
+
+    if (!FinishedNeck)
     {
-        ActionIndexNeck++;
-        if (ActionIndexNeck < TableLengthNeck)
+        if (ServoCounterNeck >= ServoDelNeck)
         {
-            Serial.println("AcionIndexNeck");
-            Serial.println(ActionIndexNeck);
-            Serial.println("NeckServo");
-            Serial.println(ServoDegreesNeck);
-            WriteServo(_NeckServo, ServoDegreesNeck);
-        }
-        else
-        {
-            FinishedNeck = true;
+            ActionIndexNeck++;
+            if (ActionIndexNeck < TableLengthNeck)
+            {
+                WriteServo(_NeckServo, ServoDegreesNeck);
+            }
+            else
+            {
+                FinishedNeck = true;
+                ActionIndexNeck = 0;
+            }
+
+            ServoCounterNeck = 0;
         }
     }
-    
-    if (ServoCounterFlower >= ServoDelFlower)
+
+    if (!FinishedFlower)
     {
-        ActionIndexFlower++;
-        if (ActionIndexFlower < TableLengthFlower)
+        if (ServoCounterFlower >= ServoDelFlower)
         {
-            WriteServo(_FlowerServo, ServoDegreesFlower);
-        }
-        else
-        {
-            FinishedFlower = true;
+            ActionIndexFlower++;
+            if (ActionIndexFlower < TableLengthFlower)
+            {
+                WriteServo(_FlowerServo, ServoDegreesFlower);
+            }
+            else
+            {
+                FinishedFlower = true;
+                ActionIndexFlower = 0;
+            }
+
+            ServoCounterFlower = 0;
         }
     }
-    
-    if (ServoCounterStab >= ServoDelStab)
+
+    if (!FinishedStab)
     {
-        ActionIndexStab++;
-        if (ActionIndexStab < TableLengthStab)
+        if (ServoCounterStab >= ServoDelStab)
         {
-            WriteServo(_StabServo, ServoDegreesStab);
-        }
-        else
-        {
-            FinishedStab = true;
+            ActionIndexStab++;
+            if (ActionIndexStab < TableLengthStab)
+            {
+                WriteServo(_StabServo, ServoDegreesStab);
+            }
+            else
+            {
+                FinishedStab = true;
+                ActionIndexStab = 0;
+            }
+
+            ServoCounterStab = 0;
         }
     }
-    
-    if (ServoCounterWave >= ServoDelWave)
+
+    if (!FinishedWave)
     {
-        ActionIndexWave++;
-        if (ActionIndexWave < TableLengthWave)
+        if (ServoCounterWave >= ServoDelWave)
         {
-            WriteServo(_WaveServo, ServoDegreesWave);
-        }
-        else
-        {
-            FinishedWave = true;
+            ActionIndexWave++;
+            if (ActionIndexWave < TableLengthWave)
+            {
+                WriteServo(_WaveServo, ServoDegreesWave);
+            }
+            else
+            {
+                FinishedWave = true;
+                ServoCounterWave = 0;
+            }
+
+            ServoCounterWave = 0;
         }
     }
-    
-    if (ServoCounterTalk >= ServoDelTalk)
+
+    if (!FinishedTalk)
     {
-        ActionIndexTalk++;
-        if (ActionIndexTalk < TableLengthTalk)
+        if (ServoCounterTalk >= ServoDelTalk)
         {
-            WriteServo(_TalkServo, ServoDelTalk);
-        }
-        else
-        {
-            FinishedTalk = true;
+            ActionIndexTalk++;
+
+            Serial.println("TalkLength");
+            Serial.println(TableLengthTalk);
+            Serial.println("AcionIndexTalk");
+            Serial.println(ActionIndexTalk);
+            Serial.println("TalkServo");
+            Serial.println(ServoDegreesTalk);
+
+            if (ActionIndexTalk < TableLengthTalk)
+            {
+                WriteServo(_TalkServo, ServoDegreesTalk);
+            }
+            else
+            {
+                FinishedTalk = true;
+                ActionIndexTalk = 0;
+            }
+
+            ServoCounterTalk = 0;
         }
     }
 }
@@ -252,9 +286,9 @@ void PlayRoutine(void)
 void WriteServo(JackServo myServo, UINT_8 setDegrees)
 {
     UINT_16 servoWriteValue = 0;
-    
-    servoWriteValue = map(setDegrees, 0, 180, 1000, 10000);
-    
+
+    servoWriteValue = map(setDegrees, 0, 180, 900, 2100);
+
     switch (myServo)
     {
     case _LidServo1:
@@ -294,14 +328,26 @@ void JackSafeStartup(void)
     WriteServo(_StabServo, STAB_Neutral);
     WriteServo(_WaveServo, WAVE_Neutral);
     WriteServo(_FlowerServo, FLOWER_Neutral);
-    
+
     digitalWrite(PinActuator, ACTUATOR_Down);
-    
+
     DelCounter_SafeStartup = millis();
     while ((millis() - DelCounter_SafeStartup) < 250);
-    
+
     WriteServo(_LidServo1, SERVO_1_CLOSE);
     WriteServo(_LidServo2, SERVO_2_CLOSE);
+    
+    FinishedNeck = false;
+    FinishedStab = false;
+    FinishedWave = false;
+    FinishedTalk = false;
+    FinishedFlower = false;
+    
+    ActionIndexNeck = 0;
+    ActionIndexStab = 0;
+    ActionIndexWave = 0;
+    ActionIndexTalk = 0;
+    ActionIndexFlower = 0;
 }
 
 void JackSafePop(void)
@@ -309,15 +355,15 @@ void JackSafePop(void)
     UINT_16 DelCounter_SafePop = 0;
     // Servos should be in safe location
     // Pop servos
-    // pause
+    // X pause - Servos not able to start pop. start actuator same time
     // Pop actuator
-    
+
     WriteServo(_LidServo1, SERVO_1_OPEN);
     WriteServo(_LidServo2, SERVO_2_OPEN);
-    
-    DelCounter_SafePop = millis();
-    while ((millis() - DelCounter_SafePop) < 100);
-    
+
+    //DelCounter_SafePop = millis();
+    //while ((millis() - DelCounter_SafePop) < 100);
+
     digitalWrite(PinActuator, ACTUATOR_Up);
 }
 
@@ -343,7 +389,7 @@ void PWMSetup(void)
     TCCR3B = _BV(WGM33) | _BV(CS31); // phase and freq correct pwm mode, clk divider = 8
     TCCR3A = 0;                      // Clear settings
     TCCR3A |= _BV(COM3A1);           // Output on A only
-    
+
     TCCR4B = _BV(WGM43) | _BV(CS41); // phase and freq correct pwm mode, clk divider = 8
     TCCR4A = 0;                      // Clear settings
     TCCR4A |= _BV(COM4A1) | _BV(COM4B1) | _BV(COM4C1); // Output on A B and C
@@ -360,17 +406,11 @@ void PWMSetup(void)
     TCNT3 = 0; // Enable timers by clearing values
     TCNT4 = 0; // Enable timers by clearing values
     TCNT5 = 0; // Enable timers by clearing values
-    
+
     // Init ontime to closed box values
-    /*    
-    WriteServo(_LidServo1, SERVO_1_CLOSE);
-    WriteServo(_LidServo2, SERVO_2_CLOSE);
-    WriteServo(_NeckServo, 90);
-    WriteServo(_FlowerServo, 90);
-    WriteServo(_StabServo, 90);
-    WriteServo(_WaveServo, 90);
-    WriteServo(_TalkServo, 90);
-    */
     JackSafeStartup();
 }
+
+
+
 

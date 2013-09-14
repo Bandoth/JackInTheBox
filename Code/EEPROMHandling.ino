@@ -62,7 +62,8 @@ void NextRoutine(void)
     }
     
     #ifdef TESTRUN
-    SelectedRoutine = _Routine5;
+    SelectedRoutine = _Routine1;
+    THRESH_ButtonPop = 2;
     #endif
     
     Serial.println("SelectedRoutine");

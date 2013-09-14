@@ -12,8 +12,8 @@
  *    SCK = 24
  *    SDI = 26
  * Servos:
- *    LidServo1    = pin 5
- *    LidServo2    = pin 6
+ *    LidServo1    = pin 5    LEFT looking at front of box
+ *    LidServo2    = pin 6    RIGHT looking at front of box
  *    NeckServo    = pin 7
  *    FlowerServo   = pin 44
  *    StabServo    = pin 45
@@ -27,12 +27,12 @@
  *    pin 41
  */
  
- //#define TESTRUN                  1
+// #define TESTRUN                  1
  
 #define SERVO_1_OPEN                20
 #define SERVO_2_OPEN                160
-#define SERVO_1_CLOSE               160
-#define SERVO_2_CLOSE               20
+#define SERVO_1_CLOSE               180
+#define SERVO_2_CLOSE               0
 
 #define THRESH_ButtonTimeout        60
 #define THRESH_ButtonPeriodSlowdown 11

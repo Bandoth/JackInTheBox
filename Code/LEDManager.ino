@@ -10,6 +10,7 @@ void LEDStateMachine(void)
         {
             digitalWrite(PinLEDOptics1, LOW);
             digitalWrite(PinLEDOptics2, LOW);
+            DelCounter_LED = 0;
         }
         else
         {

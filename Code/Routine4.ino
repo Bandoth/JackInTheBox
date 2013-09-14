@@ -1,15 +1,28 @@
 const UINT_16 ServoRoutineNeck_4[TABLELEN_Neck4][NUMRoutineColumns] = 
 {
-    { NECK_Neutral, 1 },
-    { NECK_Neutral, 6 },
-    { 165, 7 }
+    { NECK_Neutral, 1  },
+    { NECK_Neutral, 80  },
+    
+    { NECK_Right,   15 },
+    { NECK_Left,    15 },
+    
+    { NECK_Neutral, 20  },
+    
+    { NECK_Right,   15 },
+    { NECK_Left,    15 },
+    
+    { NECK_Neutral, 5  }
 };
 
 const UINT_16 ServoRoutineFlower_4[TABLELEN_Flower4][NUMRoutineColumns] = 
 {
     { FLOWER_Neutral, 1 },
     { FLOWER_Neutral, 6 },
-    { 165, 7 }
+    { FLOWER_CCW, 25 },
+    { FLOWER_CW, 25 },
+    { FLOWER_CCW, 25 },
+    { FLOWER_CW, 25 },
+    { FLOWER_Neutral, 5 }
 };
 
 const UINT_16 ServoRoutineStab_4[TABLELEN_Stab4][NUMRoutineColumns] = 
@@ -24,8 +37,12 @@ const UINT_16 ServoRoutineStab_4[TABLELEN_Stab4][NUMRoutineColumns] =
 const UINT_16 ServoRoutineWave_4[TABLELEN_Wave4][NUMRoutineColumns] = 
 {
     { WAVE_Neutral, 5 },
-    { WAVE_Neutral, 6 },
-    { 165, 7 }
+    { WAVE_Neutral, 35 },
+    { WAVE_Up, 25 },
+    { WAVE_Down, 25 },
+    { WAVE_Up, 25 },
+    { WAVE_Down, 25 },
+    { WAVE_Neutral, 10 },
 };
 
 const UINT_16 ServoRoutineTalk_4[TABLELEN_Talk4][NUMRoutineColumns] = 
@@ -44,17 +61,4 @@ const UINT_16 ServoRoutineTalk_4[TABLELEN_Talk4][NUMRoutineColumns] =
     { TALK_Neutral, 170 }
 };
 
-const UINT_16 LED1Routine4[3][NUMRoutineColumns] = 
-{
-    { 20, 5 },
-    { 90, 6 },
-    { 165, 7 }
-};
-
-const UINT_16 LED2Routine4[3][NUMRoutineColumns] = 
-{
-    { 20, 5 },
-    { 90, 6 },
-    { 165, 7 }
-};
 
