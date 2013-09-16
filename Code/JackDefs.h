@@ -29,8 +29,8 @@
  
 // #define TESTRUN                  1
  
-#define SERVO_1_OPEN                20
-#define SERVO_2_OPEN                160
+#define SERVO_1_OPEN                0
+#define SERVO_2_OPEN                180
 #define SERVO_1_CLOSE               180
 #define SERVO_2_CLOSE               0
 
